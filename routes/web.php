@@ -33,8 +33,10 @@ require __DIR__.'/auth.php';
 Route::prefix('/admin')->namespace('App\Http\Controllers\Admin')->group(function(){
     // Admin Login Route
     Route::match(['get','post'],'/login', 'AdminController@login')->name('admin.login');
-    //Admin Dashboard Route
-    Route::get('/dashboard', 'AdminController@dashboard')->name('admin.dashboard');
+    Route::group(['middleware'=>['admin']], function(){
+        //Admin Dashboard Route
+        Route::get('/dashboard', 'AdminController@dashboard')->name('admin.dashboard');
+    });
 });
 
 
